@@ -33,7 +33,7 @@ OBS: Não é obrigatorio, mas possui por padrão 500000 (quinhentas mil linhas) 
 --> atualizar <--
 Utilizado para verificar se a variável dados_nao_encontrados se encontra vazia, caso sim, apenas mostra que não a dados a serem atualizados, caso esteja com informações, mostra os valores a serem atualizados, questiona se quer atualizar e se y será feita a inicialização da função inserirDados
 Parâmetros:
-- dados_nao_encontrados: Variavel para juntar os dados que não constam no Banco depois da verificação.
+- dados_nao_encontrados: Variavel para juntar os dados que não constam no Banco depois da verificação, seguindo informações/return da função ComparacaoSQL_Excel.
 - tabela_sql: Mesmo citado acima
 - cursor: váriavel criado para inicializar a conexão com o servidor.
 - conexao: Mesmo citado mais acima.
@@ -49,3 +49,6 @@ Parâmetros:
 - conexao: Mesmo citado mais acima.
 Obs: Possui um tratamento de erro na Query e ao final caso alguma das informações tenha Truncado ou algo do tipo, será informado em qual coluna foi o erro sem evitar que milhares de linhas precisem ser iniciadas novamente.
 Obs 2: A variavel linhas_ignoradas ainda está sendo tratada, está apenas mostrando as informações da última linha que consta erro, repetindo ela pelo numero de erros.
+
+ --> comparacaoSQL_Excel
+ Faz a verificação entre o banco de dados SQL e o arquivo Excel/CSV e adiciona a variavel dados_nao_encontrados, fazendo return da mesma
