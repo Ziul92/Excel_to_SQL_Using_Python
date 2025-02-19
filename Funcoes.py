@@ -53,10 +53,12 @@ def inserirDados(dados_nao_encontrados, tabela_sql, cursor, conexao):
         for linha, mensagem in erros.items():
             print(f"Linha {linha}: {mensagem}")
 
-def verificaColunas(conexao, tabela_sql):
+def verificaColunas(conexao, tabela_sql, planilha):
     showColunas = f"SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{tabela_sql}'"
     lerColunas = pd.read_sql(showColunas, conexao)
-    return lerColunas
+    mapeamento_colunas = {coluna_excel: coluna_sql for coluna_excel, coluna_sql in zip(planilha.columns, lerColunas['COLUMN_NAME'])}
+    planilha.rename(columns=mapeamento_colunas, inplace=True)
+    return planilha
 
 def atualizar(dados_nao_encontrados, tabela_sql, cursor, conexao):
     if dados_nao_encontrados.empty: 
@@ -71,9 +73,10 @@ def atualizar(dados_nao_encontrados, tabela_sql, cursor, conexao):
         else:
             print("Dados não foram inseridos no Banco de Dados")
 
-def comparacaoSQL_Excel(resultadoSQL, planilha, coluna_chave):
+def comparacaoSQL_Excel(resultadoSQL, planilha, coluna_chave, conexao, tabela_sql):
+    renomeiaColunas = verificaColunas(conexao, tabela_sql, planilha)
     valores_no_banco = resultadoSQL[coluna_chave].unique()
-    dados_nao_encontrados = planilha[~planilha[coluna_chave].isin(valores_no_banco)]
+    dados_nao_encontrados = renomeiaColunas[~renomeiaColunas[coluna_chave].isin(valores_no_banco)]
     return dados_nao_encontrados
 
 

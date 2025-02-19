@@ -52,3 +52,14 @@ Obs 2: A variavel linhas_ignoradas ainda está sendo tratada, está apenas mostr
 
  --> comparacaoSQL_Excel
  Faz a verificação entre o banco de dados SQL e o arquivo Excel/CSV e adiciona a variavel dados_nao_encontrados, fazendo return da mesma
+ Foram atualizadas para receber a função verificaColunas() para já efetuar a verificação dos nomes das colunas e renomear para evitar erros.
+
+
+ --> verificaColunas <--
+ Para evitar erros com nomes das colunas precisando ser exatamente igual em ambas os locais dos dados, verifica colunas renomeia a planilha secundaria do Excel para as mesmas do SQL, sendo necessario apenas estar na mesma ordem e quantidade de colunas.
+ Parâmetros:
+ - conexao: Mesmo citado acima.
+ - tabela_sql: Mesmo citado acima.
+ - planilha: Mesmo citado acima.
+
+
