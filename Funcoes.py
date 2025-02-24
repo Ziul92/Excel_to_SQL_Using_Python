@@ -6,9 +6,9 @@ def verificaSQL(conexao, tabela_sql, coluna_chave):
     leituraDoSql = pd.read_sql(consulta_sql, conexao)
     return leituraDoSql
 
-def ler_Arquivo(caminho):
+def ler_Arquivo(caminho, sheet_name=0):
     planilha = caminho
-    leituraPlanilha = pd.read_excel(planilha)
+    leituraPlanilha = pd.read_excel(planilha, sheet_name)
     return leituraPlanilha
 
 def ler_CSV(caminho, limite_linhas=500000):
@@ -32,7 +32,7 @@ def inserirDados(dados_nao_encontrados, tabela_sql, cursor, conexao):
         valores = ', '.join([formatar_valores(x) for x in row])
         query_insert = f"INSERT INTO [{tabela_sql}] ({colunas}) VALUES ({valores})"
         
-        print("Query gerada:", query_insert)
+        print("ok")
         try:
             cursor.execute(query_insert)
         except pyodbc.Error as e:
@@ -79,4 +79,8 @@ def comparacaoSQL_Excel(resultadoSQL, planilha, coluna_chave, conexao, tabela_sq
     dados_nao_encontrados = renomeiaColunas[~renomeiaColunas[coluna_chave].isin(valores_no_banco)]
     return dados_nao_encontrados
 
-
+def verificaPlanilha():
+    pasta = input('Qual a tabela a ser atualizada?')
+    coluna = input('Qual a coluna chave?')
+    ano = input('Qual o ano do arquivo?')
+    return pasta, coluna, ano
